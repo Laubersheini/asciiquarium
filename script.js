@@ -123,7 +123,7 @@ function add_seaweed(){
 
   function initialize_fish(){
     let screenSize = (colCount-9) * lineCount;
-    let fish_count = Math.floor(screenSize/500);
+    let fish_count = Math.floor(screenSize/350);
     for (var i = 0; i < fish_count; i++) {
       add_fish();
     }
@@ -131,7 +131,7 @@ function add_seaweed(){
 
   }
 
-  function add_fish(){
+  function add_fish(){// TODO: fish need bubble
     let fish_sprites = [
       Entity.spriteToArray`
              \
@@ -334,7 +334,7 @@ function add_seaweed(){
     let fish_num = Math.floor(Math.random()*fish_sprites.length/2);
     // fish_num = 0;
     let fish_index = fish_num *2;
-    let speed = Math.floor(Math.random()*1600)+600 //lower numbers means faster fish
+    let speed = Math.floor(Math.random()*1800)+300 //lower numbers means faster fish
     let fish_object = new Entity({
       sprite: fish_sprites[fish_index],
       dieOnOutOfBounds: true,
@@ -357,6 +357,46 @@ function add_seaweed(){
     }
     renderer.addEntity(fish_object)
   }
+
+function add_big_fish(){
+
+  let big_fish_sprites = [
+    `
+     ______
+    '""-.  '''''-----.....__
+         '.  .      .       '-.
+           :     .     .       '.
+     ,     :   .    .          _ :
+    : '.   :                  (@) '._
+     '. '..'     .     ='-.       .__)
+       ;     .        =  ~  :     .-"
+     .' .''.   .    .  =.-'  '._ .'
+    : .'   :               .   .'
+     '   .'  .    .     .   .-'
+       .'____....----''.'=.'
+       ""             .'.'
+                   ''"''
+    `,
+    `
+                               ______
+              __.....-----'''''  .-""'
+           .-'       .      .  .'
+         .'       .     .     :
+        : _          .    .   :     ,
+     _.' (@)                  :   .' :
+    (__.       .-'=     .     '..' .'
+     "-.     :  ~  =        .     ;
+       '. _.'  '-.=  .    .   .''. '.
+         '.   .               :   '. :
+           '-.   .     .    .  '.   '
+              '.='.''----....____'.
+                '.'.             ""
+                  ''"''
+    `
+  ]
+
+}
+
 
 
 //helper funcions

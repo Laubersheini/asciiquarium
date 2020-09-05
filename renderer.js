@@ -26,12 +26,13 @@ class Renderer {
 
 
   draw(){//display the changed lines in the terminal
-    this.terminal.innerText = "";
+    let newText = ""
     for(let i=0;i<this.lines.length;i++){
-      this.terminal.innerText += this.lines[i] + "\n"
+    newText += this.lines[i] + "\n"
 
 
     }
+    this.terminal.innerText = newText;
     }
     clearScreen(){
 
