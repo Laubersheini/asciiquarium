@@ -81,7 +81,6 @@ x:colCount-32,y:lineCount-13
 
 }
 
-/*
 function add_all_seaweed(){
   let seaweed_count = Math.floor(colCount/15);
 
@@ -93,13 +92,32 @@ function add_all_seaweed(){
 
 function add_seaweed(){
     let height = Math.floor(Math.random()*4)+3;
-    let seaweed
+    let seaweedSprite = []
+    seaweedSprite[0] = [];
+    seaweedSprite[1] = [];
     for (var i = 0; i <height ; i++) {
-
+      if(i%2==1){
+      seaweedSprite[0].push("(");
+      seaweedSprite[1].push(" )");
+    }else{
+      seaweedSprite[0].push(" )");
+      seaweedSprite[1].push("(");
+    }
     }
 
+    let x = Math.ceil(Math.random()*(colCount-2));
+    let y = lineCount-height;
+    let animationSpeed = Math.floor(Math.random()*20)+10
+    renderer.addEntity(new Entity({
+      sprite:seaweedSprite,
+      x:x,
+      y:y,
+      animationSpeed: animationSpeed
+
+    }))
+
 }
-*/
+
 
 
 //helper funcions

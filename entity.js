@@ -3,8 +3,20 @@ class Entity {
 
   constructor(args) {
     this.moving = false;
+    console.log(typeof(args.sprite[0]));
+    if(typeof(args.sprite[0])=="string"){
+      this.sprite = args.sprite;
+      this.animated = false;
+    }else{//assume that it has multiple frames
+      this.animated =true
+      this.animationTimer =0; //when this number reaches the animation speed the frame will get swaped
+      this.currentFrame =0;
+      this.frames = args.sprite;
+      this.sprite = args.sprite[0]
+      this.animationSpeed= args.animationSpeed;
+    }
 
-    this.sprite = args.sprite;
+
 
     this.floatX = args.x;
     this.floatY = args.y;
@@ -13,7 +25,21 @@ class Entity {
 
   }
 
+  animate(){
+    if(this.animated){
+      this.animationTimer++;
+      if(this.animationTimer >= this.animationSpeed){
+        this.currentFrame = (this.currentFrame +1) %this.frames.length;
+        this.sprite = this.frames[this.currentFrame]
+        this.animationTimer =0;
+      }
 
+
+
+    }
+
+
+  }
 
   moveTo(args){
     this.moving = true;
@@ -28,6 +54,7 @@ class Entity {
 
     update(){
       this.move()
+      this.animate();
     }
 
     move(){
