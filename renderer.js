@@ -46,11 +46,11 @@ class Renderer {
       for(let i=0;i<this.entities.length;i++){//all entities
         for(let j = 0; j<this.entities[i].sprite.length;j++){ //rows
           for(let k=0;k<this.entities[i].sprite[j].length;k++){//cols
-
-            if(j+this.entities[i].y>=0&&j+this.entities[i].y<this.rows &&k+this.entities[i].x>=0&&k+this.entities[i].x<=this.colCount){
+            if(this.entities[i].sprite[j].charAt(k) !=" " &&this.entities[i].sprite[j].charAt(k) !="  "){
+              if(j+this.entities[i].y>=0&&j+this.entities[i].y<this.rows &&k+this.entities[i].x>=0&&k+this.entities[i].x<=this.colCount){
                 this.lines[j+this.entities[i].y]= setCharAt(this.lines[j+this.entities[i].y],k+this.entities[i].x,this.entities[i].sprite[j].charAt(k))
               }
-
+            }
 
 
           }
@@ -64,6 +64,16 @@ class Renderer {
         }
     }
 
+    removeDeadEntities(){
+      for(let i=this.entities.length-1;i>=0;i--){
+        if(this.entities[i].dead){
+          this.entities.splice(i, 1);
+      }
+      }
+
+
+
+    }
 
     addEntity(entity){
       this.entities.push(entity)
@@ -72,6 +82,7 @@ class Renderer {
 
 
     static update(renderer){
+      renderer.removeDeadEntities();
       renderer.updateEntities();
       renderer.drawEntities()
       renderer.draw();

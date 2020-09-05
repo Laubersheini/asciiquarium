@@ -26,10 +26,11 @@ let depth = {
 var renderer = new Renderer({terminal:document.getElementById("terminal"),rows:lineCount,colCount: 360});
 
 function initialize(){
+  initialize_fish();
   add_environment();
   add_castle();
   add_all_seaweed();
-  initialize_fish();
+
 
   Renderer.update(renderer)
 }
@@ -120,7 +121,7 @@ function add_seaweed(){
 
   function initialize_fish(){
     let screenSize = (colCount-9) * lineCount;
-    let fish_count = Math.floor(screenSize/350);
+    let fish_count = Math.floor(screenSize/500);
     for (var i = 0; i < fish_count; i++) {
       add_fish();
     }
@@ -327,23 +328,25 @@ function add_seaweed(){
       11116
       `
     ]
-console.log(fish_sprites);
+
     let fish_num = Math.floor(Math.random()*fish_sprites.length/2);
     // fish_num = 0;
     let fish_index = fish_num *2;
     let speed = Math.floor(Math.random()*1600)+600 //lower numbers means faster fish
     let fish_object = new Entity({
-      sprite: fish_sprites[fish_index]
+      sprite: fish_sprites[fish_index],
+      dieOnOutOfBounds: true,
+      deathCallback:add_fish
 
 
     })
-
+    console.log("added fish");
     let minHeight =9;
     let maxHeight = lineCount - fish_sprites[fish_index].length;
 
   fish_object.setY(Math.floor(Math.random()*(maxHeight-minHeight)))+minHeight;
     if(fish_num%2 == 0){//fish is looking to the right
-      fish_object.setX(0);
+      fish_object.setX(-10);
       fish_object.moveTo({x:colCount+50,y:fish_object.y,duration:speed})
 
     }else{//leftwards fish

@@ -3,7 +3,8 @@ class Entity {
 
   constructor(args) {
     this.moving = false;
-    console.log(typeof(args.sprite[0]));
+    this.dead = false;
+
     if(typeof(args.sprite[0])=="string"){
       this.sprite = args.sprite;
       this.animated = false;
@@ -16,8 +17,8 @@ class Entity {
       this.animationSpeed= args.animationSpeed;
     }
 
-
-
+    this.deathCallback = args.deathCallback;
+    this.dieOnOutOfBounds = args.dieOnOutOfBounds;
     this.floatX = args.x;
     this.floatY = args.y;
     this.x = Math.round(args.x);
@@ -66,8 +67,18 @@ class Entity {
       }
 
     }
+    if(this.dieOnOutOfBounds){
+      if(this.x<-20||this.x>colCount+20||this.y<-20||this.y>lineCount+20){// TODO: needs more flexible solution ?
+        this.die()
+      }
+
+      }
   }
 
+  die(){
+    this.dead = true;
+    this.deathCallback();
+  }
   setX(x){
       this.floatX = x;
       this.x = Math.round(x)
