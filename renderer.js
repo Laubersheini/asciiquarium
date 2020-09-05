@@ -28,7 +28,7 @@ class Renderer {
   draw(){//display the changed lines in the terminal
     this.terminal.innerText = "";
     for(let i=0;i<this.lines.length;i++){
-      this.terminal.innerHTML += this.lines[i] + "<br/>"
+      this.terminal.innerText += this.lines[i] + "\n"
 
 
     }

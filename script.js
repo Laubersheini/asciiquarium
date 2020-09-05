@@ -26,9 +26,11 @@ let depth = {
 var renderer = new Renderer({terminal:document.getElementById("terminal"),rows:lineCount,colCount: 360});
 
 function initialize(){
+  add_castle();
+
   initialize_fish();
   add_environment();
-  add_castle();
+
   add_all_seaweed();
 
 
@@ -53,7 +55,7 @@ function add_environment(){
     repeatedWaterLineSegment[i] = water_line_segment[i].repeat(segmentRepeat)
   }
 
-  renderer.addEntity(new Entity({sprite:repeatedWaterLineSegment,x:0,y:0}))
+  renderer.addEntity(new Entity({sprite:repeatedWaterLineSegment,x:0,y:9}))
 }
 
 
@@ -340,11 +342,11 @@ function add_seaweed(){
 
 
     })
-    console.log("added fish");
+
     let minHeight =9;
     let maxHeight = lineCount - fish_sprites[fish_index].length;
 
-  fish_object.setY(Math.floor(Math.random()*(maxHeight-minHeight)))+minHeight;
+  fish_object.setY(Math.floor(Math.random()*(maxHeight-minHeight))+minHeight);
     if(fish_num%2 == 0){//fish is looking to the right
       fish_object.setX(-10);
       fish_object.moveTo({x:colCount+50,y:fish_object.y,duration:speed})
