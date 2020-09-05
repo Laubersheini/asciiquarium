@@ -29,7 +29,7 @@ function initialize(){
   add_environment();
   add_castle();
   add_all_seaweed();
-
+  initialize_fish();
 
   Renderer.update(renderer)
 }
@@ -118,6 +118,240 @@ function add_seaweed(){
 
 }
 
+  function initialize_fish(){
+    let screenSize = (colCount-9) * lineCount;
+    let fish_count = Math.floor(screenSize/350);
+    for (var i = 0; i < fish_count; i++) {
+      add_fish();
+    }
+
+
+  }
+
+  function add_fish(){
+    let fish_sprites = [
+      Entity.spriteToArray`
+             \
+           ...\..,
+      \  /'       \
+       >=     (  ' >
+      /  \      / /
+          ´"'"'/''
+      `,
+      Entity.spriteToArray`
+             2
+           1112111
+      6  11       1
+       66     7  4 5
+      6  1      3 1
+          11111311
+      `,
+      Entity.spriteToArray`
+            /
+        ,../...
+       /       '\  /
+      < '  )     =<
+       \ \      /  \
+        ´'\'"'"'
+      `,
+      Entity.spriteToArray`
+            2
+        1112111
+       1       11  6
+      5 4  7     66
+       1 3      1  6
+        11311111
+      `,
+      Entity.spriteToArray`
+          \
+      \ /--\
+      >=  (o>
+      / \__/
+          /
+      `,
+      Entity.spriteToArray`
+          2
+      6 1111
+      66  745
+      6 1111
+          3
+      `,
+      Entity.spriteToArray`
+        /
+       /--\ /
+      <o)  =<
+       \__/ \
+        \
+      `,
+      Entity.spriteToArray`
+        2
+       1111 6
+      547  66
+       1111 6
+        3
+      `,
+      Entity.spriteToArray`
+             \:.
+      \;,   ,;\\\\\,,
+        \\\\\;;:::::::o
+        ///;;::::::::<
+       /;´ ´´/////´´
+      `,
+      Entity.spriteToArray`
+             222
+      666   1122211
+        6661111111114
+        66611111111115
+       666 113333311
+      `,
+      Entity.spriteToArray`
+            .:/
+         ,,///;,   ,;/
+       o:::::::;;///
+      >::::::::;;\\\\\
+        ''\\\\\\\\\'' ';\
+      `,
+      Entity.spriteToArray`
+            222
+         1122211   666
+       4111111111666
+      51111111111666
+        113333311 666
+      `,
+      Entity.spriteToArray`
+        __
+      ><_'>
+         '
+      `,
+      Entity.spriteToArray`
+        11
+      61145
+         3
+      `,
+      Entity.spriteToArray`
+       __
+      <'_><
+       ´
+      `,
+      Entity.spriteToArray`
+       11
+      54116
+       3
+      `,
+      Entity.spriteToArray`
+         ..\,
+      >='   ('>
+        '''/''
+      `,
+      Entity.spriteToArray`
+         1121
+      661   745
+        111311
+      `,
+      Entity.spriteToArray`
+        ,/..
+      <')   ´=<
+       ´´\´´´
+      `,
+      Entity.spriteToArray`
+        1211
+      547   166
+       113111
+      `,
+      Entity.spriteToArray`
+         \
+        / \
+      >=_('>
+        \_/
+         /
+      `,
+      Entity.spriteToArray`
+         2
+        1 1
+      661745
+        111
+         3
+      `,
+      Entity.spriteToArray`
+        /
+       / \
+      <')_=<
+       \_/
+        \
+      `,
+      Entity.spriteToArray`
+        2
+       1 1
+      547166
+       111
+        3
+      `,
+      Entity.spriteToArray`
+        ,\
+      >=('>
+        '/
+      `,
+      Entity.spriteToArray`
+        12
+      66745
+        13
+      `,
+      Entity.spriteToArray`
+       /,
+      <')=<
+       \´
+      `,
+      Entity.spriteToArray`
+       21
+      54766
+       31
+      `,
+      Entity.spriteToArray`
+        __
+      \/ o\
+      /\__/
+      `,
+      Entity.spriteToArray`
+        11
+      61 41
+      61111
+      `,
+      Entity.spriteToArray`
+       __
+      /o \/
+      \__/\
+      `,
+      Entity.spriteToArray`
+       11
+      14 16
+      11116
+      `
+    ]
+console.log(fish_sprites);
+    let fish_num = Math.floor(Math.random()*fish_sprites.length/2);
+    // fish_num = 0;
+    let fish_index = fish_num *2;
+    let speed = Math.floor(Math.random()*1600)+600 //lower numbers means faster fish
+    let fish_object = new Entity({
+      sprite: fish_sprites[fish_index]
+
+
+    })
+
+    let minHeight =9;
+    let maxHeight = lineCount - fish_sprites[fish_index].length;
+
+  fish_object.setY(Math.floor(Math.random()*(maxHeight-minHeight)))+minHeight;
+    if(fish_num%2 == 0){//fish is looking to the right
+      fish_object.setX(0);
+      fish_object.moveTo({x:colCount+50,y:fish_object.y,duration:speed})
+
+    }else{//leftwards fish
+        fish_object.setX(colCount);
+        fish_object.moveTo({x:-50,y:fish_object.y,duration:speed})
+    }
+    renderer.addEntity(fish_object)
+  }
 
 
 //helper funcions

@@ -79,6 +79,7 @@ class Entity {
   }
 
   static spriteToArray(strings,...values){//tag for a template string to return it
+
     return strings.raw[0].split("\n")
 
   }
