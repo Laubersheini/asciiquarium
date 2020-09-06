@@ -1,6 +1,6 @@
 var lineCount=60;
 var colCount = 200; //fine for 16/9, needs to be determind on resize ?
-
+const colCountOffset = 0
 let depth = {
 
 
@@ -23,11 +23,16 @@ let depth = {
 
 }
 
-var renderer = new Renderer({terminal:document.getElementById("terminal"),rows:lineCount,colCount: 360});
-
+var renderer;
+renderer = new Renderer({terminal:document.getElementById("terminal"),rows:lineCount,colCount: colCount});
+Renderer.update(renderer)
 function initialize(){
-  renderer.clearAllEntities();
-  
+
+renderer.clearAllEntities();
+renderer.setColCount(colCount)
+
+
+
   add_castle();
   add_all_seaweed();
   add_environment();
@@ -35,12 +40,7 @@ function initialize(){
   initialize_fish();
 
 
-
-
-
-  Renderer.update(renderer)
 }
-initialize()
 
 function add_special_thing(){
   const objectCount =3
@@ -537,8 +537,8 @@ terminal.style.width =width;
 function resize(){
 document.getElementById('terminal').style.fontSize = document.getElementById('terminal').offsetHeight/60 +"px";
 
-colCount = detectColCount(document.getElementById('terminal'))
-
+colCount = detectColCount(document.getElementById('terminal')) + colCountOffset;
+console.log("resizing");
 initialize()
 }
 resize()//call at beginig so everything looks good

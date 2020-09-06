@@ -1,4 +1,4 @@
-
+var prevTime = performance.now();
 class Renderer {
 
 
@@ -86,6 +86,11 @@ class Renderer {
 
 
     }
+    setColCount(colCount){
+      this.colCount = colCount;
+      this.singleClearedLine= " ".repeat(this.colCount);
+    }
+
 
 
     static update(renderer){
@@ -93,7 +98,8 @@ class Renderer {
       renderer.updateEntities();
       renderer.drawEntities()
       renderer.draw();
-
+      console.log(1/(performance.now()-prevTime)*1000);
+      prevTime = performance.now();
       setTimeout(Renderer.update,33,renderer)
     }
 
