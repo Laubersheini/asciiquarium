@@ -80,6 +80,12 @@ class Renderer {
       this.entities.push(entity)
     }
 
+    clearAllEntities(){
+
+      this.entities = [];
+
+
+    }
 
 
     static update(renderer){

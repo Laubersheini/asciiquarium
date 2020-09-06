@@ -1,5 +1,5 @@
-const lineCount=60;
-const colCount = 200; //fine for 16/9, needs to be determind on resize ?
+var lineCount=60;
+var colCount = 200; //fine for 16/9, needs to be determind on resize ?
 
 let depth = {
 
@@ -26,6 +26,8 @@ let depth = {
 var renderer = new Renderer({terminal:document.getElementById("terminal"),rows:lineCount,colCount: 360});
 
 function initialize(){
+  renderer.clearAllEntities();
+  
   add_castle();
   add_all_seaweed();
   add_environment();
@@ -510,8 +512,34 @@ function setCharAt(str,index,chr) {//maby put into the renderer class ?
 }
 
 
+function detectColCount(terminal){
+  var height = terminal.style.height;
+  var width =terminal.style.width
+  terminal.style.height = "";
+  terminal.style.width ="";
+
+  let temp = terminal.innerHTML;
+  terminal.innerText = "~"
+  var single_width =terminal.getBoundingClientRect().width
+
+
+  terminal.style.height = height;
+terminal.style.width =width;
+  terminal.innerHTML = temp;
+
+
+
+
+  return Math.ceil(window.innerWidth/single_width);
+}
+
+
 function resize(){
 document.getElementById('terminal').style.fontSize = document.getElementById('terminal').offsetHeight/60 +"px";
+
+colCount = detectColCount(document.getElementById('terminal'))
+
+initialize()
 }
 resize()//call at beginig so everything looks good
 window.addEventListener("resize",resize)
