@@ -27,17 +27,40 @@ var renderer = new Renderer({terminal:document.getElementById("terminal"),rows:l
 
 function initialize(){
   add_castle();
-
-  initialize_fish();
-  add_environment();
-
   add_all_seaweed();
+  add_environment();
+  add_special_thing();
+  initialize_fish();
+
+
+
 
 
   Renderer.update(renderer)
 }
 initialize()
 
+function add_special_thing(){
+  const objectCount =3
+  let randomId = Math.floor(Math.random()*objectCount);
+
+
+  switch (randomId) {
+    case 0:
+      add_big_fish();
+    break;
+    case 1:
+      add_ship();
+    break;
+    case 2:
+      add_swan();
+    break;
+    default:
+
+  }
+
+
+}
 
 
 function add_environment(){
@@ -334,7 +357,7 @@ function add_seaweed(){
     let fish_num = Math.floor(Math.random()*fish_sprites.length/2);
     // fish_num = 0;
     let fish_index = fish_num *2;
-    let speed = Math.floor(Math.random()*1800)+300 //lower numbers means faster fish
+    let speed = Math.floor(Math.random()*3000)+600 //lower numbers means faster fish
     let fish_object = new Entity({
       sprite: fish_sprites[fish_index],
       dieOnOutOfBounds: true,
@@ -360,8 +383,8 @@ function add_seaweed(){
 
 function add_big_fish(){
 
-  let big_fish_sprites = [
-    `
+  let fish_sprites = [
+    Entity.spriteToArray`
      ______
     '""-.  '''''-----.....__
          '.  .      .       '-.
@@ -377,7 +400,7 @@ function add_big_fish(){
        ""             .'.'
                    ''"''
     `,
-    `
+    Entity.spriteToArray`
                                ______
               __.....-----'''''  .-""'
            .-'       .      .  .'
@@ -394,8 +417,89 @@ function add_big_fish(){
                   ''"''
     `
   ]
+  generateSpecialThing(fish_sprites,9,lineCount - fish_sprites[0].length,3000,600)
 
 }
+
+function add_ship(){
+
+var sprites = [
+  Entity.spriteToArray`
+       |    |    |
+      )_)  )_)  )_)
+     )___))___))___)\
+    )____)____)_____)\\\
+  _____|____|____|____\\\\\__
+  \                   /
+  `,
+  Entity.spriteToArray`
+           |    |    |
+          (_(  (_(  (_(
+        /(___((___((___(
+      //(_____(____(____(
+  __///____|____|____|_____
+      \                   /
+  `
+]
+generateSpecialThing(sprites,2,2,2500,0)// TODO: find out how this was in the original
+}
+function add_swan(){
+
+var sprites =
+  [
+Entity.spriteToArray`
+       ___
+,_    / _,\
+| \   \( \|
+|  \_  \\\
+(_   \_) \
+(\_   '   \
+ \   -=~  /
+`
+	,
+Entity.spriteToArray`
+ ___
+/,_ \    _,
+|/ )/   / |
+  //  _/  |
+ / ( /   _)
+/   '   _/)
+\  ~=-   /
+`
+	]
+
+generateSpecialThing(sprites,2,2,3000,600)
+
+}
+
+function generateSpecialThing(sprites,minHeight,maxHeight,lowerSpeed,upperSpeed) {
+
+        let index = Math.floor(Math.random()*2);
+
+
+        let speed = Math.floor(Math.random()*upperSpeed)+lowerSpeed //lower numbers means faster fish
+        let fish_object = new Entity({//shouldnt tecnically be called this way anymore but meh..
+          sprite: sprites[index],
+          dieOnOutOfBounds: true,
+          deathCallback:add_special_thing
+
+
+        })
+
+
+      fish_object.setY(Math.floor(Math.random()*(maxHeight-minHeight))+minHeight);
+        if(index%2 == 0){//fish is looking to the right
+          fish_object.setX(-10);
+          fish_object.moveTo({x:colCount+50,y:fish_object.y,duration:speed})
+
+        }else{//leftwards fish
+            fish_object.setX(colCount);
+            fish_object.moveTo({x:-50,y:fish_object.y,duration:speed})
+        }
+        renderer.addEntity(fish_object)
+  }
+
+
 
 
 
